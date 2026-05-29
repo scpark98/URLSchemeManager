@@ -1,0 +1,26 @@
+root = true
+
+[*]
+charset = utf-8-bom
+end_of_line = crlf
+insert_final_newline = false
+trim_trailing_whitespace = false
+
+[*.{c,cc,cpp,cxx,h,hh,hpp,hxx,inl}]
+charset = utf-8-bom
+end_of_line = crlf
+indent_style = tab
+tab_width = 4
+
+[*.{rc,rc2}]
+charset = utf-16le
+end_of_line = crlf
+
+[*.{json,yml,yaml,md,xml}]
+charset = utf-8
+indent_style = space
+indent_size = 2
+
+[*.{sln,vcxproj,vcxproj.filters,props,targets}]
+charset = utf-8-bom
+end_of_line = crlf
