@@ -7,14 +7,15 @@
 #define IDS_ABOUTBOX                    101
 #define IDD_URLSCHEMEMANAGER_DIALOG     102
 #define IDR_MAINFRAME                   128
-#define IDC_STATIC_URLSCHEME            1000
 #define IDC_BUTTON_REGISTER             1001
 #define IDC_BUTTON_DELETE_REGISTRY      1002
 #define IDC_COMBO_BROWSER               1003
 #define IDC_BUTTON_REMOVE_CHECK         1004
 #define IDC_BUTTON_CONFIRM              1005
-#define IDC_RICHEDIT21                  1006
 #define IDC_RICH                        1006
+#define IDC_COMBO_URL_SCHEME            1007
+#define IDC_STATIC_REMOVE_ACCEPT        1008
+#define IDC_STATIC_LAUNCHER_PATH        1009
 
 // Next default values for new objects
 // 
@@ -22,7 +23,7 @@
 #ifndef APSTUDIO_READONLY_SYMBOLS
 #define _APS_NEXT_RESOURCE_VALUE        130
 #define _APS_NEXT_COMMAND_VALUE         32771
-#define _APS_NEXT_CONTROL_VALUE         1007
+#define _APS_NEXT_CONTROL_VALUE         1010
 #define _APS_NEXT_SYMED_VALUE           101
 #endif
 #endif
