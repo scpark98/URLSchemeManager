@@ -8,7 +8,7 @@
 #include "Common/CComboBox/SCComboBox/SCComboBox.h"
 #include "Common/CEdit/RichEditCtrlEx/RichEditCtrlEx.h"
 #include "Common/CEdit/CSCStaticEdit/SCStaticEdit.h"
-#include "Common/CStatic/SCParagraphStatic/SCParagraphStatic.h"
+#include "Common/CStatic/SCStatic/SCStatic.h"
 
 #include <deque>
 
@@ -64,7 +64,7 @@ public:
 	CSCComboBox m_combo_url_scheme;
 	afx_msg void OnCbnSelchangeComboUrlScheme();
 	afx_msg void OnWindowPosChanged(WINDOWPOS* lpwndpos);
-	CSCParagraphStatic m_static_remove_accept;
+	CSCStatic m_static_remove_accept;
 	CSCStaticEdit m_static_launcher_path;
 	virtual BOOL PreTranslateMessage(MSG* pMsg);
 };

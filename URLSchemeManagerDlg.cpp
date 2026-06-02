@@ -157,7 +157,7 @@ BOOL CURLSchemeManagerDlg::OnInitDialog()
 	load_browser_list();
 
 	m_combo_browser.set_line_height(16);
-	m_static_remove_accept.set_text(_T("브라우저에서 URLScheme으로 실행을 <b><cr=blue>\"항상 허용\"</b></cr>한 경우 옵션 제거 가능 (체크하고 확인을 누른 경우)<br>")
+	m_static_remove_accept.set_tagged_text(_T("브라우저에서 URLScheme으로 실행을 <b><cr=blue>\"항상 허용\"</b></cr>한 경우 옵션 제거 가능 (체크하고 확인을 누른 경우)<br>")
 									_T("URLScheme으로 실행하겠냐는 확인창을 다시 표시하고자 할 경우는 \"항상 허용 제거\"를 클릭."));
 
 	update_button_state();
