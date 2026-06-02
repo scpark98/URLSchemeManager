@@ -127,6 +127,8 @@ BOOL CURLSchemeManagerDlg::OnInitDialog()
 	SetIcon(m_hIcon, FALSE);		// 작은 아이콘을 설정합니다.
 
 	// TODO: 여기에 추가 초기화 작업을 추가합니다.
+	init_tooltip();
+
 	m_resize.Create(this);
 	m_resize.Add(IDC_COMBO_URL_SCHEME, 0, 0, 100, 0);
 	m_resize.Add(IDC_STATIC_LAUNCHER_PATH, 0, 0, 100, 0);
@@ -149,17 +151,39 @@ BOOL CURLSchemeManagerDlg::OnInitDialog()
 		m_combo_url_scheme.SelectString(-1, recent_url_scheme);
 
 	m_static_launcher_path.set_action_button(CSCStaticEdit::action_file);
+	m_static_launcher_path.set_readonly();
+	m_static_launcher_path.set_dim_text(_T("레지스트리에 URLScheme 관련 등록된 정보가 없습니다."));
 
 	load_browser_list();
 
 	m_combo_browser.set_line_height(16);
-	m_static_remove_accept.set_text(_T("브라우저에서 <b><cr=blue>\"항상 허용\"</b></cr> 옵션 제거 (체크하고 확인을 누른 경우)<br>URLScheme으로 실행하겠냐는 확인창을 다시 표시하고자 할 경우는 \"항상 허용 제거\"를 클릭."));
+	m_static_remove_accept.set_text(_T("브라우저에서 URLScheme으로 실행을 <b><cr=blue>\"항상 허용\"</b></cr>한 경우 옵션 제거 가능 (체크하고 확인을 누른 경우)<br>")
+									_T("URLScheme으로 실행하겠냐는 확인창을 다시 표시하고자 할 경우는 \"항상 허용 제거\"를 클릭."));
 
 	update_button_state();
 
 	RestoreWindowPosition(&theApp, this, _T(""), false, true);
 
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
+}
+
+void CURLSchemeManagerDlg::init_tooltip()
+{
+	m_tooltip.Create(this, TTS_ALWAYSTIP | TTS_NOPREFIX | TTS_NOANIMATE);
+
+	//필요한 옵션 설정
+	m_tooltip.SetDelayTime(TTDT_AUTOPOP, -1);	//optional. 툴팁 표시 지속시간 설정.
+	m_tooltip.SetDelayTime(TTDT_INITIAL, 500);	//optional. 툴팁을 표시하기 위해 마우스가 머물러야 할 최소 시간.
+	m_tooltip.SetDelayTime(TTDT_RESHOW, 0);		//optional. 포인터가 한 도구에서 다른 도구로 이동할 때 후속 도구 설명 창이 표시되는 데 걸리는 시간.
+	m_tooltip.SetMaxTipWidth(400);				//optional. 툴팁창의 최대 너비로서 여러줄의 툴팁을 표시할 경우 필수. ‘\n’ 문자로 멀티라인 표현 가능.
+	m_tooltip.Activate(TRUE);
+
+	m_tooltip.AddTool(GetDlgItem(IDC_BUTTON_CONFIRM),	_T("URLScheme String을 입력한 후 이 버튼을 클릭하면 Launcher fullpath, 레지스트리 등록 여부,")
+														_T("브라우저에서의 \"항상 허용\" 여부에 따라 각 버튼들의 상태가 변경됨"));
+	m_tooltip.AddTool(GetDlgItem(IDC_BUTTON_REGISTER),	_T("URLScheme String과 Launcher fullpath 설정 후 URLScheme 정보를 레지스트리에 등록해준다"));
+	m_tooltip.AddTool(GetDlgItem(IDC_BUTTON_DELETE_REGISTRY), _T("레지스트리에 등록된 URLScheme 정보를 삭제한다"));
+	m_tooltip.AddTool(GetDlgItem(IDC_BUTTON_REMOVE_CHECK), _T("URLScheme 정보가 시스템에 등록되어 있으면 웹브라우저에서 항상 이 프로그램으로 열겠냐는 대화상자가 표시되는데")
+														_T("한번 체크한 후에는 다시 이 대화상자는 표시되지 않는다. \"항상 허용 제거\" 버튼을 클릭하여 대화상자를 다시 표시할 수 있다"));
 }
 
 void CURLSchemeManagerDlg::OnSysCommand(UINT nID, LPARAM lParam)
@@ -334,7 +358,10 @@ void CURLSchemeManagerDlg::OnBnClickedButtonRemoveCheck()
 
 	if (!exe.IsEmpty() && is_running(exe))
 	{
-		m_rich.addl(CR_ERROR, _T("[remove] %s이(가) 실행중이므로 제거할 수 없습니다. 완전히 종료 후 다시 시도하세요. 만약 실행중인 프로세스가 없는데도 이 메시지가 표시된다면 작업관리자에서 백그라운드로 실행중인 프로세스를 직접 종료시켜야 합니다."), browser);
+		m_rich.addl(CR_ERROR, _T("[remove] %s이(가) 실행중이므로 제거할 수 없습니다. 완전히 종료 후 다시 시도하세요.")
+							_T("만약 실행중인 프로세스가 없는데도 이 메시지가 표시된다면 작업관리자에서 백그라운드로 실행중인 프로세스를 직접 종료시켜야 합니다."), browser);
+		if (exe == _T("msedge.exe"))
+			m_rich.addl(CR_ERROR, _T("특히 Microsoft Edge의 경우는 작업 관리자 → 프로세스 → 백그라운드 프로세스 → Microsoft Edge 항목을 우클릭하여 \"작업 끝내기\"를 실행합니다."));
 		return;
 	}
 
@@ -644,4 +671,30 @@ void CURLSchemeManagerDlg::OnWindowPosChanged(WINDOWPOS* lpwndpos)
 	CDialogEx::OnWindowPosChanged(lpwndpos);
 
 	SaveWindowPosition(&theApp, this);
+}
+
+BOOL CURLSchemeManagerDlg::PreTranslateMessage(MSG* pMsg)
+{
+	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
+	//이 코드를 넣어줘야 disabled에서도 툴팁이 동작하는데
+	//이 코드를 컨트롤 클래스에 넣어줘도 소용없다.
+	//이 코드는 main에 있어야만 disable 상태일때도 잘 표시된다.
+	if (m_tooltip.m_hWnd)
+	{
+		//msg를 따로 선언해서 사용하지 않고 *pMsg를 그대로 이용하면 이상한 현상이 발생한다.
+		MSG msg = *pMsg;
+		msg.hwnd = (HWND)m_tooltip.SendMessage(TTM_WINDOWFROMPOINT, 0, (LPARAM) & (msg.pt));
+
+		CPoint pt = msg.pt;
+
+		if (msg.message >= WM_MOUSEFIRST && msg.message <= WM_MOUSELAST)
+			::ScreenToClient(msg.hwnd, &pt);
+
+		msg.lParam = MAKELONG(pt.x, pt.y);
+
+		// relay mouse event before deleting old tool 
+		m_tooltip.SendMessage(TTM_RELAYEVENT, 0, (LPARAM)&msg);
+	}
+
+	return CDialogEx::PreTranslateMessage(pMsg);
 }

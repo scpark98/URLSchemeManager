@@ -28,6 +28,9 @@ public:
 	virtual void DoDataExchange(CDataExchange* pDX);	// DDX/DDV 지원입니다.
 
 protected:
+	CToolTipCtrl	m_tooltip;
+	void			init_tooltip();
+
 	CResizeCtrl		m_resize;
 
 	void			load_browser_list();
@@ -63,4 +66,5 @@ public:
 	afx_msg void OnWindowPosChanged(WINDOWPOS* lpwndpos);
 	CSCParagraphStatic m_static_remove_accept;
 	CSCStaticEdit m_static_launcher_path;
+	virtual BOOL PreTranslateMessage(MSG* pMsg);
 };
