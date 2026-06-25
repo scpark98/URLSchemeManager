@@ -220,10 +220,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\Common\CComboBox\SCComboBox\SCComboBox.h" />
+    <ClInclude Include="..\Common\CDialog\CSCColorPicker\SCColorPicker.h" />
+    <ClInclude Include="..\Common\CDialog\CSCColorPicker\SCDropperDlg.h" />
     <ClInclude Include="..\Common\CEdit\CSCStaticEdit\SCStaticEdit.h" />
     <ClInclude Include="..\Common\CEdit\RichEditCtrlEx\RichEditCtrlEx.h" />
     <ClInclude Include="..\Common\CEdit\SCEdit\SCEdit.h" />
     <ClInclude Include="..\Common\colors.h" />
+    <ClInclude Include="..\Common\CSliderCtrl\SCSliderCtrl\SCSliderCtrl.h" />
     <ClInclude Include="..\Common\CStatic\SCStatic\SCStatic.h" />
     <ClInclude Include="..\Common\data_structure\SCParagraph\SCParagraph.h" />
     <ClInclude Include="..\Common\Functions.h" />
@@ -238,6 +241,18 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Common\CComboBox\SCComboBox\SCComboBox.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\Common\CDialog\CSCColorPicker\SCColorPicker.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\Common\CDialog\CSCColorPicker\SCDropperDlg.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
@@ -262,6 +277,12 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\Common\colors.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\Common\CSliderCtrl\SCSliderCtrl\SCSliderCtrl.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
