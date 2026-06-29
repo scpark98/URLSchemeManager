@@ -137,18 +137,21 @@ BOOL CURLSchemeManagerDlg::OnInitDialog()
 	m_combo_url_scheme.set_line_height(14);
 	m_combo_url_scheme.load_history(&theApp, _T("setting\\url schemes"));
 
-	m_combo_url_scheme.add(_T("manuallauncher.pcanypro.service"));
-	m_combo_url_scheme.add(_T("manuallauncher.lmmse.service"));
+	//레지스트리에 이미 아래 항목들이 저장되어 있었고 위에서 load_history를 하므로
+	//add는 이미 있을 경우는 새로 추가하는 것이 아니므로 아래와 동일한 차례로 나타나지 않을 수 있다.
 	m_combo_url_scheme.add(_T("manuallauncher.lmm.service"));
+	m_combo_url_scheme.add(_T("manuallauncher.lmmse.service"));
 	m_combo_url_scheme.add(_T("manuallauncher.helpu.service.host"));
 	m_combo_url_scheme.add(_T("manuallauncher.helpu.service.host.user"));
 	m_combo_url_scheme.add(_T("manuallauncher.helpu.service.supporter"));
 	m_combo_url_scheme.add(_T("manuallauncher.anysupport.service.host"));
 	m_combo_url_scheme.add(_T("manuallauncher.anysupport.service.supporter"));
+	m_combo_url_scheme.add(_T("manuallauncher.pcanypro.service"));
 
 	CString recent_url_scheme = theApp.GetProfileString(_T("setting"), _T("recent url scheme"), _T(""));
 	if (recent_url_scheme.IsEmpty() == false)
 		m_combo_url_scheme.SelectString(-1, recent_url_scheme);
+
 
 	m_static_launcher_path.set_action_button(CSCStaticEdit::action_file);
 	m_static_launcher_path.set_readonly();
@@ -160,7 +163,7 @@ BOOL CURLSchemeManagerDlg::OnInitDialog()
 	m_static_remove_accept.set_tagged_text(_T("브라우저에서 URLScheme으로 실행을 <b><cr=blue>\"항상 허용\"</b></cr>한 경우 옵션 제거 가능 (체크하고 확인을 누른 경우)<br>")
 									_T("URLScheme으로 실행하겠냐는 확인창을 다시 표시하고자 할 경우는 \"항상 허용 제거\"를 클릭."));
 
-	update_button_state();
+	OnBnClickedButtonConfirm();
 
 	RestoreWindowPosition(&theApp, this, _T(""), false, true);
 
@@ -657,13 +660,13 @@ void CURLSchemeManagerDlg::OnBnClickedButtonConfirm()
 			break;
 	}
 
-	if (!command.IsEmpty())
-		m_static_launcher_path.set_text(extract_app_path_from_command(command));
+	m_static_launcher_path.set_text(extract_app_path_from_command(command));
 }
 
 void CURLSchemeManagerDlg::OnCbnSelchangeComboUrlScheme()
 {
-	update_button_state();
+	OnBnClickedButtonConfirm();
+	//update_button_state();
 }
 
 void CURLSchemeManagerDlg::OnWindowPosChanged(WINDOWPOS* lpwndpos)
